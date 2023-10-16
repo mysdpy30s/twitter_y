@@ -4,7 +4,11 @@ import styled from "styled-components";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
-export default function CreateAccount() {
+interface SignupProps {
+  closeSignupModal: () => void;
+}
+
+export default function CreateAccount({ closeSignupModal }: SignupProps) {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState("");
@@ -12,6 +16,7 @@ export default function CreateAccount() {
   const [password, setPassword] = useState("");
   const [phonenum, setPhonenum] = useState("");
   const [error, setError] = useState("");
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
       target: { name, value },
@@ -50,6 +55,9 @@ export default function CreateAccount() {
 
   return (
     <Wrapper>
+      <Closebtn className="close-btn" onClick={closeSignupModal}>
+        X
+      </Closebtn>
       <Title>계정 만들기</Title>
       <Form onSubmit={onSubmit}>
         <Input
@@ -94,8 +102,7 @@ export default function CreateAccount() {
           다른 사람들이 이 정보로 내 계정을 찾을 수 있게 됩니다. 해당 정보를
           제공하지 않으시려면 여기에서 변경하세요.
         </Text>
-        <br />
-        <Button type="submit">완료</Button>
+        <Button type="submit">{isLoading ? "Loading..." : "완료"}</Button>
       </Form>
       {error !== "" ? <Error>{error}</Error> : null}
     </Wrapper>
@@ -109,7 +116,7 @@ const Wrapper = styled.div`
   justify-content: left;
   align-items: flex-start;
   margin: 0 auto;
-  padding-top: 5rem;
+  padding-top: 3rem;
 `;
 
 const Title = styled.h1`
@@ -117,7 +124,7 @@ const Title = styled.h1`
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-size: 2rem;
   font-weight: 700;
-  margin-bottom: 0.5em;
+  margin-bottom: 1.2em;
 `;
 
 const Form = styled.form``;
@@ -156,7 +163,7 @@ const Text = styled.span`
 const Button = styled.button`
   width: 24em;
   height: 3em;
-  margin-top: 1em;
+  margin-top: 3em;
   background-color: #a889ff;
   color: #ffffff;
   font-weight: 700;
@@ -168,4 +175,14 @@ const Button = styled.button`
 const Error = styled.span`
   font-weight: 600;
   color: tomato;
+`;
+
+const Closebtn = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
 `;
