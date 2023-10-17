@@ -1,8 +1,18 @@
-import styled from "styled-components";
 import { auth } from "../firebase";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { FirebaseError } from "firebase/app";
+import {
+  Button,
+  Closebtn,
+  Error,
+  Form,
+  Input,
+  Switcher,
+  Title,
+  Wrapper,
+} from "../components/auth-components";
 
 interface LoginProps {
   closeLoginModal: () => void;
@@ -26,13 +36,16 @@ export default function Login({ closeLoginModal }: LoginProps) {
   };
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError("");
     if (isLoading || email === "" || password === "") return; // 로딩중이거나 이름/이메일/패스워드 하나라도 빈칸인 경우 함수를 바로 종료함.
     try {
       setIsLoading(true);
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/layout"); // 홈 화면으로 이동하게 만듦.
+      navigate("/layout/home"); // 홈 화면으로 이동하게 만듦.
     } catch (e) {
-      setError(error);
+      if (e instanceof FirebaseError) {
+        setError(e.message);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -61,73 +74,15 @@ export default function Login({ closeLoginModal }: LoginProps) {
           required
           onChange={onChange}
         />
-        <Button type="submit">{isLoading ? "Loading..." : "완료"}</Button>
+        <Button type="submit">{isLoading ? "들어가는 중..." : "완료"}</Button>
       </Form>
-      {error !== "" ? <Error>{error}</Error> : null}
+      {error.includes("auth/invalid-login-credentials") && (
+        <Error>이메일 또는 비밀번호가 다릅니다.</Error>
+      )}
+      <Switcher>
+        트위터 계정이 없으신가요?{" "}
+        <Link to="/create-account">계정 만들기 &rarr;</Link>
+      </Switcher>
     </Wrapper>
   );
 }
-
-const Wrapper = styled.div`
-  width: 320px;
-  display: flex;
-  flex-direction: column;
-  justify-content: left;
-  align-items: flex-start;
-  margin: 0 auto;
-  padding-top: 3rem;
-`;
-
-const Title = styled.h1`
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 1.2em;
-`;
-
-const Form = styled.form``;
-
-const Input = styled.input`
-  display: flex;
-  flex-direction: column;
-  color: #8a61ff;
-  width: 23em;
-  height: 2em;
-  border: 1px solid #dfdfdf;
-  margin-top: 0.7em;
-  padding-left: 0.5em;
-  &::placeholder {
-    color: #a889ff;
-  }
-  &:focus {
-    border: 1px solid #a889ff;
-  }
-`;
-
-const Button = styled.button`
-  width: 24em;
-  height: 3em;
-  margin-top: 3em;
-  background-color: #a889ff;
-  color: #ffffff;
-  font-weight: 700;
-  border-radius: 5em;
-  border: 0;
-  cursor: pointer;
-`;
-
-const Error = styled.span`
-  font-weight: 600;
-  color: tomato;
-`;
-
-const Closebtn = styled.button`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 1.5em;
-  cursor: pointer;
-`;

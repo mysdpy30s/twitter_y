@@ -13,7 +13,6 @@ export default function StartPage() {
   const closeSignupModal = () => {
     setSignupModalIsOpen(false);
   };
-
   const openLoginModal = () => {
     setLoginModalIsOpen(true);
   };
@@ -116,7 +115,7 @@ const H1 = styled.h1`
   margin-bottom: 2em;
 `;
 const H2 = styled.h2`
-  font-size: ${(props) => (props.fontSize ? props.fontSize : "1.5em")};
+  font-size: 1.5em;
   font-weight: 700;
   margin-bottom: 1em;
 `;
@@ -148,8 +147,7 @@ const Button = styled.button`
   height: 2.5em;
   margin-top: 1em;
   margin-bottom: 0.5em;
-  background-color: ${(props) =>
-    props.backgroundColor ? props.backgroundColor : "#a889ff"};
+  background-color: #a889ff;
   color: ${(props) => (props.color ? props.color : "#ffffff")};
   font-size: 1em;
   font-weight: 700;

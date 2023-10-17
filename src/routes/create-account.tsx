@@ -1,8 +1,19 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useState } from "react";
-import styled from "styled-components";
 import { auth } from "../firebase";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { FirebaseError } from "firebase/app";
+import {
+  Button,
+  Closebtn,
+  Error,
+  Form,
+  Input,
+  Switcher,
+  Text,
+  Title,
+  Wrapper,
+} from "../components/auth-components";
 
 interface SignupProps {
   closeSignupModal: () => void;
@@ -33,6 +44,7 @@ export default function CreateAccount({ closeSignupModal }: SignupProps) {
   };
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError("");
     if (isLoading || name === "" || email === "" || password === "") return; // 로딩중이거나 이름/이메일/패스워드 하나라도 빈칸인 경우 함수를 바로 종료함.
     try {
       setIsLoading(true);
@@ -45,9 +57,11 @@ export default function CreateAccount({ closeSignupModal }: SignupProps) {
       await updateProfile(credentials.user, {
         displayName: name, // 파이어베이스의 사용자는 이름을 포함하여 작은 아바타 이미지의 URL을 가지는 미니 프로필을 얻게 됨. 이 점을 고려하여, 계정을 만든 후 사용자 이름을 프로필에 업데이트 하도록 해당 코드를 작성.
       });
-      navigate("/layout"); // 홈 화면으로 이동하게 만듦.
+      navigate("/layout/home"); // 홈 화면으로 이동하게 만듦.
     } catch (e) {
-      setError(error);
+      if (e instanceof FirebaseError) {
+        setError(e.code);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -104,85 +118,15 @@ export default function CreateAccount({ closeSignupModal }: SignupProps) {
         </Text>
         <Button type="submit">{isLoading ? "Loading..." : "완료"}</Button>
       </Form>
-      {error !== "" ? <Error>{error}</Error> : null}
+      {error.includes("auth/email-already-in-use") && (
+        <Error>이미 가입된 이메일 주소입니다.</Error>
+      )}
+      {error.includes("auth/weak-password") && (
+        <Error>비밀번호는 최소 6자리 이상이어야 합니다.</Error>
+      )}
+      <Switcher>
+        이미 계정이 있으신가요? <Link to="/login">로그인 &rarr;</Link>
+      </Switcher>
     </Wrapper>
   );
 }
-
-const Wrapper = styled.div`
-  width: 320px;
-  display: flex;
-  flex-direction: column;
-  justify-content: left;
-  align-items: flex-start;
-  margin: 0 auto;
-  padding-top: 3rem;
-`;
-
-const Title = styled.h1`
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 1.2em;
-`;
-
-const Form = styled.form``;
-
-const Input = styled.input`
-  display: flex;
-  flex-direction: column;
-  color: #8a61ff;
-  width: 23em;
-  height: 2em;
-  border: 1px solid #dfdfdf;
-  margin-top: 0.7em;
-  padding-left: 0.5em;
-  &::placeholder {
-    color: #a889ff;
-  }
-  &:focus {
-    border: 1px solid #a889ff;
-  }
-`;
-
-const Text = styled.span`
-  padding-top: 1em;
-  font-size: 0.5em;
-  color: #686868;
-  line-height: -10%;
-  a {
-    text-decoration: none;
-    color: #a889ff;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
-
-const Button = styled.button`
-  width: 24em;
-  height: 3em;
-  margin-top: 3em;
-  background-color: #a889ff;
-  color: #ffffff;
-  font-weight: 700;
-  border-radius: 5em;
-  border: 0;
-  cursor: pointer;
-`;
-
-const Error = styled.span`
-  font-weight: 600;
-  color: tomato;
-`;
-
-const Closebtn = styled.button`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 1.5em;
-  cursor: pointer;
-`;

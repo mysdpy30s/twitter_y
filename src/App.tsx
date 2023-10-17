@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import LoadingScreen from "./components/loading-screen";
 import { auth } from "./firebase";
 import StartPage from "./components/start";
+import ProtectedRoute from "./components/protected-route";
 
 const router = createBrowserRouter([
   {
@@ -18,10 +19,15 @@ const router = createBrowserRouter([
   },
   {
     path: "/layout",
-    element: <Layout />,
+    // ProtectedRoute로 Layout을 보호함으로써, Layout의 children인 Home과 Profile도 함께 보호됨
+    element: (
+      <ProtectedRoute>
+        <Layout />
+      </ProtectedRoute>
+    ),
     children: [
       {
-        path: "",
+        path: "home",
         element: <Home />,
       },
       {

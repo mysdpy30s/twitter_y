@@ -9,14 +9,14 @@ const Wrapper = styled.div`
 `;
 
 const Logo = styled.img`
-  width: 10%;
-  height: 10%;
+  width: 5%;
+  height: 5%;
 `;
 
 export default function LoadingScreen() {
   return (
     <Wrapper>
-      <Logo src="logo.png" alt="logo" />
+      <Logo src="logo.svg" alt="logo" />
     </Wrapper>
   );
 }
