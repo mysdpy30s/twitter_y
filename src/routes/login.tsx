@@ -13,6 +13,7 @@ import {
   Title,
   Wrapper,
 } from "../components/auth-components";
+import GoogleButton from "../components/google-btn";
 
 interface LoginProps {
   closeLoginModal: () => void;
@@ -41,7 +42,7 @@ export default function Login({ closeLoginModal }: LoginProps) {
     try {
       setIsLoading(true);
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/layout/home"); // 홈 화면으로 이동하게 만듦.
+      navigate("/home"); // 홈 화면으로 이동하게 만듦.
     } catch (e) {
       if (e instanceof FirebaseError) {
         setError(e.message);
@@ -57,6 +58,7 @@ export default function Login({ closeLoginModal }: LoginProps) {
         X
       </Closebtn>
       <Title>들어가기</Title>
+      <GoogleButton text="Google 계정으로 로그인" />
       <Form onSubmit={onSubmit}>
         <Input
           type="email"
@@ -80,8 +82,7 @@ export default function Login({ closeLoginModal }: LoginProps) {
         <Error>이메일 또는 비밀번호가 다릅니다.</Error>
       )}
       <Switcher>
-        트위터 계정이 없으신가요?{" "}
-        <Link to="/create-account">계정 만들기 &rarr;</Link>
+        트위터 계정이 없으신가요? <Link to="/create-account">계정 만들기</Link>
       </Switcher>
     </Wrapper>
   );

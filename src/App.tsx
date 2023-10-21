@@ -18,7 +18,7 @@ const router = createBrowserRouter([
     element: <StartPage />,
   },
   {
-    path: "/layout",
+    path: "/",
     // ProtectedRoute로 Layout을 보호함으로써, Layout의 children인 Home과 Profile도 함께 보호됨
     element: (
       <ProtectedRoute>

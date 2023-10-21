@@ -24,10 +24,7 @@ export default function SearchBar() {
     </Wrapper>
   );
 }
-const Wrapper = styled.div`
-  margin-left: 2em;
-  margin-bottom: 3rem;
-`;
+const Wrapper = styled.div``;
 const SearchBox = styled.div`
   input {
     width: 15rem;

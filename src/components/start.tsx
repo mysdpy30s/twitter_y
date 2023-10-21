@@ -3,6 +3,7 @@ import styled from "styled-components";
 import ReactModal from "react-modal";
 import CreateAccount from "../routes/create-account";
 import Login from "../routes/login";
+import GoogleButton from "./google-btn";
 
 export default function StartPage() {
   const [signupModalIsOpen, setSignupModalIsOpen] = useState(false);
@@ -29,6 +30,7 @@ export default function StartPage() {
         <H1>지금 일어나고 있는 일</H1>
         <Signdiv>
           <H2>지금 가입하세요.</H2>
+          <GoogleButton text="Google 계정으로 가입하기" />
           <Button onClick={openSignupModal}>계정 만들기</Button>
           {signupModalIsOpen ? (
             <ReactModal
@@ -143,8 +145,8 @@ const Signdiv = styled.div`
 `;
 
 const Button = styled.button`
-  width: 15em;
-  height: 2.5em;
+  width: 100%;
+  height: 2em;
   margin-top: 1em;
   margin-bottom: 0.5em;
   background-color: #a889ff;
