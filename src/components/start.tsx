@@ -24,7 +24,7 @@ export default function StartPage() {
   return (
     <Wrapper>
       <div>
-        <Logo src="logo.png" alt="logo" />
+        <Logo src="logo.svg" alt="logo" />
       </div>
       <div>
         <H1>지금 일어나고 있는 일</H1>

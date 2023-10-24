@@ -158,9 +158,8 @@ const StyledLink = styled(Link)`
   font-size: 1em;
 
   &:hover {
-    background-color: #8a66fa;
-    color: white;
-    border-radius: 5rem;
-    padding: 0.3rem;
+    /* background-color: #8a66fa; */
+    color: #8a66fa;
+    font-weight: 700;
   }
 `;

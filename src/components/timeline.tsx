@@ -18,6 +18,7 @@ export interface MyTweet {
   userId: string;
   username: string;
   createdAt: number;
+  photoURL?: string;
 }
 
 export default function Timeline() {
@@ -31,21 +32,11 @@ export default function Timeline() {
         orderBy("createdAt", "desc"),
         limit(25)
       );
-      // const snapshot = await getDocs(tweetQuery);
-      // const tweets = snapshot.docs.map((doc) => {
-      //   const { tweet, createdAt, userId, username, photo } = doc.data();
-      //   return {
-      //     tweet,
-      //     createdAt,
-      //     userId,
-      //     username,
-      //     photo,
-      //     id: doc.id,
-      //   };
-      // });
+
       unsubscribe = await onSnapshot(tweetQuery, (snapshot) => {
         const tweets = snapshot.docs.map((doc) => {
-          const { tweet, createdAt, userId, username, photo } = doc.data();
+          const { tweet, createdAt, userId, username, photo, photoURL } =
+            doc.data();
           return {
             tweet,
             createdAt,
@@ -53,6 +44,7 @@ export default function Timeline() {
             username,
             photo,
             id: doc.id,
+            photoURL,
           };
         });
         setTweet(tweets);

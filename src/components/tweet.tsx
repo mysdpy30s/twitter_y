@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { MyTweet } from "./timeline";
 import { auth, db, storage } from "../firebase";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
-import { deleteObject, ref } from "firebase/storage";
-import { useState } from "react";
+import { deleteObject, getDownloadURL, ref } from "firebase/storage";
+import { useEffect, useState } from "react";
 
 export default function Tweet({
   username,
@@ -14,26 +14,42 @@ export default function Tweet({
   id,
 }: MyTweet) {
   const user = auth.currentUser;
-  const userAvatar = user?.photoURL ?? `/public/default-avatar.svg`;
   const time = new Date(createdAt);
   const postedTime = time.toLocaleString("sv");
 
   const [isEditing, setIsEditing] = useState(false);
   const [editedTweet, setEditedTweet] = useState(tweet);
+  const [userAvatar, setUserAvatar] = useState("");
+
+  useEffect(() => {
+    async function fetchUserAvatar() {
+      try {
+        const avatarUrl = await getDownloadURL(
+          ref(storage, `avatars/${userId}`)
+        );
+        setUserAvatar(avatarUrl);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    fetchUserAvatar();
+  }, [userId]);
 
   const onEdit = async () => {
     if (user?.uid !== userId) return;
     if (isEditing) {
+      const updateData: { tweet: string; photo?: string } = {
+        tweet: editedTweet,
+      };
+      if (photo) {
+        updateData.photo = photo;
+      }
       try {
-        await updateDoc(doc(db, "tweets", id), {
-          tweet: editedTweet,
-          photo,
-        });
+        await updateDoc(doc(db, "tweets", id), updateData);
       } catch (e) {
         console.log(e);
       } finally {
         setIsEditing(!isEditing);
-        console.log(postedTime);
       }
     } else {
       setIsEditing(true);
@@ -59,7 +75,11 @@ export default function Tweet({
   return (
     <Wrapper>
       <AvatarColumn>
-        <img src={userAvatar} alt="user-avatar" />
+        {userAvatar ? (
+          <img src={userAvatar} alt="user-avatar" />
+        ) : (
+          <img src="/public/default-avatar.svg" alt="default-avatar" />
+        )}
       </AvatarColumn>
       <ContentColumn>
         <Username>{username}</Username>
@@ -138,7 +158,10 @@ const EditInput = styled.input`
   background-color: #f4f0ff;
   font-size: 1em;
   margin-top: 0.7em;
-  align-items: flex-start;
+  &:focus {
+    border: 1px solid #8a66fa;
+    outline: none;
+  }
 `;
 const EditButton = styled.button`
   font-weight: 600;
@@ -149,6 +172,9 @@ const EditButton = styled.button`
     width: 1.5em;
     height: 1.5em;
   }
+  &:hover {
+    transform: scale(130%);
+  }
 `;
 const DeleteButton = styled.button`
   font-weight: 600;
@@ -158,5 +184,8 @@ const DeleteButton = styled.button`
   img {
     width: 1.5em;
     height: 1.5em;
+  }
+  &:hover {
+    transform: scale(130%);
   }
 `;

@@ -95,3 +95,8 @@ export const Text = styled.span`
     }
   }
 `;
+
+export const H1 = styled.h1`
+  font-size: 1.3rem;
+  font-weight: 700;
+`;
