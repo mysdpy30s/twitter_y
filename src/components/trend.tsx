@@ -17,13 +17,14 @@ export default function Trend() {
 
 const Wrapper = styled.div`
   margin-left: 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const H1 = styled.h1`
   font-size: 1.3rem;
   font-weight: 700;
-  margin-right: 3rem;
-  margin-bottom: 1em;
 `;
 
 const ImgTrend = styled.img`
@@ -36,5 +37,4 @@ const Content = styled.div`
   background-color: #f2f2f2;
   border-radius: 3rem;
   padding: 1rem;
-  margin-bottom: 5rem;
 `;

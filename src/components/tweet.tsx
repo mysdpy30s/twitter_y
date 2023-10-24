@@ -4,6 +4,7 @@ import { auth, db, storage } from "../firebase";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { deleteObject, getDownloadURL, ref } from "firebase/storage";
 import { useEffect, useState } from "react";
+import { formatDistanceToNow } from "date-fns";
 
 export default function Tweet({
   username,
@@ -15,7 +16,8 @@ export default function Tweet({
 }: MyTweet) {
   const user = auth.currentUser;
   const time = new Date(createdAt);
-  const postedTime = time.toLocaleString("sv");
+  const convertedTime = time.toLocaleString("sv");
+  const timeAgo = formatDistanceToNow(time, { addSuffix: true });
 
   const [isEditing, setIsEditing] = useState(false);
   const [editedTweet, setEditedTweet] = useState(tweet);
@@ -82,8 +84,10 @@ export default function Tweet({
         )}
       </AvatarColumn>
       <ContentColumn>
-        <Username>{username}</Username>
-        <CreatedAt>{postedTime}</CreatedAt>
+        <NameDateRow>
+          <Username>{username}</Username>
+          <CreatedAt title={convertedTime}>{timeAgo}</CreatedAt>
+        </NameDateRow>
         {isEditing ? (
           <EditInput
             type="text"
@@ -121,6 +125,7 @@ const Wrapper = styled.div`
   border-top: 1px solid #f2f2f2;
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
 `;
 const AvatarColumn = styled.div`
   flex: 0.1;
@@ -133,23 +138,30 @@ const AvatarColumn = styled.div`
 const ContentColumn = styled.div`
   flex: 0.8;
 `;
-const EditColumn = styled.div`
-  flex: 0.1;
+const NameDateRow = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
-`;
-const CreatedAt = styled.div``;
-const Photo = styled.img`
-  width: 80%;
-  height: 80%;
+  align-items: center;
 `;
 const Username = styled.span`
   font-weight: 600;
   font-size: 1.1em;
 `;
-const Payload = styled.p`
-  margin-top: 0.7em;
+const CreatedAt = styled.div`
+  font-size: 0.8em;
+  font-weight: 400;
+  color: #9a9a9a;
+  margin-left: 0.5em;
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+`;
+const EditColumn = styled.div`
+  flex: 0.1;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
 `;
 const EditInput = styled.input`
   border: 0;
@@ -188,4 +200,11 @@ const DeleteButton = styled.button`
   &:hover {
     transform: scale(130%);
   }
+`;
+const Photo = styled.img`
+  width: 80%;
+  height: 80%;
+`;
+const Payload = styled.p`
+  margin-top: 0.7em;
 `;

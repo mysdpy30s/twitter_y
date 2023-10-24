@@ -21,7 +21,7 @@ export default function Layout() {
               홈
             </MenuItem>
           </StyledLink>
-          <StyledLink to="/profile">
+          <StyledLink to="explore">
             <MenuItem>
               <svg
                 width="24"
@@ -41,7 +41,7 @@ export default function Layout() {
               탐색하기
             </MenuItem>
           </StyledLink>
-          <StyledLink to="/">
+          <StyledLink to="notification">
             <MenuItem>
               <svg
                 width="24"
@@ -57,7 +57,7 @@ export default function Layout() {
               알림
             </MenuItem>
           </StyledLink>
-          <StyledLink to="/">
+          <StyledLink to="message">
             <MenuItem>
               <svg
                 width="24"
@@ -77,7 +77,7 @@ export default function Layout() {
               메시지
             </MenuItem>
           </StyledLink>
-          <StyledLink to="/">
+          <StyledLink to="bookmark">
             <MenuItem>
               <svg
                 width="24"
@@ -118,12 +118,13 @@ export default function Layout() {
 }
 
 const Wrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  gap: 2rem;
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
   padding: 2em 2em;
   height: 100%;
   width: 100%;
+  box-sizing: border-box;
 `;
 
 const Logo = styled.img`
@@ -158,7 +159,9 @@ const StyledLink = styled(Link)`
   font-size: 1em;
 
   &:hover {
-    /* background-color: #8a66fa; */
+    background-color: #f2f2f2;
+    padding: 0 0.4em;
+    border-radius: 2em;
     color: #8a66fa;
     font-weight: 700;
   }

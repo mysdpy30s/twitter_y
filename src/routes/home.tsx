@@ -2,6 +2,8 @@ import styled from "styled-components";
 import Posting from "../components/posting";
 import Timeline from "../components/timeline";
 import SearchBar from "../components/search";
+import Trend from "../components/trend";
+import Follow from "../components/follow";
 
 export default function Home() {
   return (
@@ -14,6 +16,8 @@ export default function Home() {
         </Content>
         <Aside>
           <SearchBar />
+          <Trend />
+          <Follow />
         </Aside>
       </Wrapper>
     </>
@@ -21,20 +25,19 @@ export default function Home() {
 }
 
 const Wrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  border-right: 1px solid #f2f2f2;
+  display: flex;
+  flex-direction: row;
 `;
 
-const Content = styled.div`
-  width: 600px;
-`;
+const Content = styled.div``;
 
 const Aside = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: center;
+  margin-left: 3em;
+  gap: 2em;
 `;
 
 const H1 = styled.h1`

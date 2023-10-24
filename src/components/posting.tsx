@@ -98,7 +98,7 @@ const Wrapper = styled.div`
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: 0.5em;
 `;
 const TextArea = styled.textarea`
   resize: none;
@@ -125,6 +125,7 @@ const ItemWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const InputWrapper = styled.div`
@@ -148,7 +149,6 @@ const SubmitBtn = styled.input`
   padding: 0.5em 1.5em;
   background-color: #d7c9ff;
   color: white;
-
   border: 1px solid #f2f2f2;
   border-radius: 3em;
   cursor: pointer;

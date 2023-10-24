@@ -1,16 +1,20 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { createGlobalStyle } from "styled-components";
+import reset from "styled-reset";
+import { useEffect, useState } from "react";
+import { auth } from "./firebase";
 import Layout from "./components/layout";
 import Home from "./routes/home";
 import Profile from "./routes/profile";
 import Login from "./routes/login";
 import CreateAccount from "./routes/create-account";
-import { createGlobalStyle } from "styled-components";
-import reset from "styled-reset";
-import { useEffect, useState } from "react";
 import LoadingScreen from "./components/loading-screen";
-import { auth } from "./firebase";
 import StartPage from "./components/start";
 import ProtectedRoute from "./components/protected-route";
+import Explore from "./routes/explore";
+import Notification from "./routes/notification";
+import Message from "./routes/message";
+import Bookmark from "./routes/bookmark";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +33,22 @@ const router = createBrowserRouter([
       {
         path: "home",
         element: <Home />,
+      },
+      {
+        path: "explore",
+        element: <Explore />,
+      },
+      {
+        path: "notification",
+        element: <Notification />,
+      },
+      {
+        path: "message",
+        element: <Message />,
+      },
+      {
+        path: "bookmark",
+        element: <Bookmark />,
       },
       {
         path: "profile",

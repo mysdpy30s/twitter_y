@@ -15,13 +15,11 @@ const Wrapper = styled.div`
 const H1 = styled.h1`
   font-size: 1.3rem;
   font-weight: 700;
-  margin-right: 3rem;
-  margin-bottom: 1em;
 `;
 const Content = styled.div`
   width: 80%;
   background-color: #f2f2f2;
   border-radius: 3rem;
   padding: 1rem;
-  margin-bottom: 5rem;
+  margin-bottom: 3rem;
 `;

@@ -136,9 +136,11 @@ export default function Profile() {
       <UploadStatus>{uploadStatus}</UploadStatus>
       <MyTweetList>
         <MyTweetListTitle>내가 작성한 트윗</MyTweetListTitle>
-        {myTweet
-          ? myTweet.map((tweet) => <Tweet key={tweet.id} {...tweet} />)
-          : "아직 작성한 트윗이 없습니다."}
+        <MyTweetContent>
+          {myTweet
+            ? myTweet.map((tweet) => <Tweet key={tweet.id} {...tweet} />)
+            : "아직 작성한 트윗이 없습니다."}
+        </MyTweetContent>
       </MyTweetList>
     </Wrapper>
   );
@@ -257,4 +259,7 @@ const MyTweetListTitle = styled.div`
   border-bottom: 3px solid #ae91ff;
   cursor: default;
   font-weight: 600;
+`;
+const MyTweetContent = styled.div`
+  width: 40rem;
 `;
