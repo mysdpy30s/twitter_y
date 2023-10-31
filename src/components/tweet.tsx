@@ -80,7 +80,7 @@ export default function Tweet({
         {userAvatar ? (
           <img src={userAvatar} alt="user-avatar" />
         ) : (
-          <img src="/public/default-avatar.svg" alt="default-avatar" />
+          <img src="default-avatar.svg" alt="default-avatar" />
         )}
       </AvatarColumn>
       <ContentColumn>
@@ -107,12 +107,12 @@ export default function Tweet({
         {" "}
         {user?.uid === userId ? (
           <EditButton onClick={onEdit}>
-            <img src="/public/edit.svg" alt="Edit" />
+            <img src="edit.svg" alt="Edit" />
           </EditButton>
         ) : null}
         {user?.uid === userId ? (
           <DeleteButton onClick={onDelete}>
-            <img src="/public/delete.svg" alt="delete" />
+            <img src="delete.svg" alt="delete" />
           </DeleteButton>
         ) : null}
       </EditColumn>
@@ -146,6 +146,7 @@ const NameDateRow = styled.div`
 const Username = styled.span`
   font-weight: 600;
   font-size: 1.1em;
+  cursor: default;
 `;
 const CreatedAt = styled.div`
   font-size: 0.8em;
@@ -153,8 +154,7 @@ const CreatedAt = styled.div`
   color: #9a9a9a;
   margin-left: 0.5em;
   &:hover {
-    text-decoration: underline;
-    cursor: pointer;
+    cursor: default;
   }
 `;
 const EditColumn = styled.div`
@@ -177,7 +177,7 @@ const EditInput = styled.input`
 `;
 const EditButton = styled.button`
   font-weight: 600;
-  background-color: white;
+  background-color: transparent;
   border: 0;
   cursor: pointer;
   img {
@@ -191,7 +191,7 @@ const EditButton = styled.button`
 const DeleteButton = styled.button`
   font-weight: 600;
   border: 0;
-  background-color: white;
+  background-color: transparent;
   cursor: pointer;
   img {
     width: 1.5em;
@@ -202,9 +202,13 @@ const DeleteButton = styled.button`
   }
 `;
 const Photo = styled.img`
+  margin-top: 0.4em;
+  border-radius: 1em;
+  border: 1px solid #f2f2f2;
   width: 80%;
   height: 80%;
 `;
 const Payload = styled.p`
   margin-top: 0.7em;
+  cursor: default;
 `;

@@ -5,8 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 export default function ShowProfile() {
   const navigate = useNavigate();
   const userName = auth.currentUser?.displayName;
-  const userId = auth.currentUser?.email;
-  const userAvatar = auth.currentUser?.photoURL ?? `/public/default-avatar.svg`;
+  const userId = auth.currentUser?.email?.split("@")[0];
+  const userAvatar = auth.currentUser?.photoURL ?? `default-avatar.svg`;
 
   const logOut = async () => {
     const ok = confirm("로그아웃 하시겠습니까?");
@@ -91,6 +91,7 @@ const Span = styled.span`
 `;
 const ProfileAvatar = styled.div`
   margin-left: 0.5em;
+  margin-right: 0.5em;
   position: relative;
   &:hover {
     ${AvatarSubMenu} {

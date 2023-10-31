@@ -1,5 +1,5 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import { useEffect, useState } from "react";
 import { auth } from "./firebase";
@@ -66,9 +66,6 @@ const router = createBrowserRouter([
   },
 ]);
 
-const GlobalStyles = createGlobalStyle`
-  ${reset};
-`;
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const init = async () => {
@@ -79,11 +76,19 @@ function App() {
     init();
   }, []);
   return (
-    <>
+    <Wrapper>
       <GlobalStyles />
       {isLoading ? <LoadingScreen /> : <RouterProvider router={router} />}
-    </>
+    </Wrapper>
   );
 }
 
 export default App;
+
+const GlobalStyles = createGlobalStyle`
+  ${reset};
+  * {
+    box-sizing: border-box;
+  }
+`;
+const Wrapper = styled.div``;

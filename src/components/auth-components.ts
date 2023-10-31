@@ -1,13 +1,15 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  width: 320px;
+  width: 20rem;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: left;
+  justify-content: center;
   align-items: flex-start;
   margin: 0 auto;
   padding-top: 3rem;
+  padding-bottom: 3rem;
 `;
 
 export const Title = styled.h1`
@@ -26,9 +28,9 @@ export const Input = styled.input`
   display: flex;
   flex-direction: column;
   color: #8a61ff;
-  width: 23em;
-  height: 2em;
-  border: 1px solid #dfdfdf;
+  width: 24em;
+  height: 2.3em;
+  border: 1px solid #ececec;
   margin-top: 0.7em;
   padding-left: 0.5em;
   &::placeholder {
@@ -36,6 +38,7 @@ export const Input = styled.input`
   }
   &:focus {
     border: 1px solid #a889ff;
+    outline: none;
   }
 `;
 

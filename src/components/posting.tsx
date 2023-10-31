@@ -3,11 +3,13 @@ import { useState } from "react";
 import styled from "styled-components";
 import { auth, db, storage } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 
 export default function Posting() {
   const [isLoading, setIsLoading] = useState(false);
   const [tweet, setTweet] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTweet(e.target.value);
   };
@@ -16,6 +18,13 @@ export default function Posting() {
     if (files && files.length === 1) {
       setFile(files[0]); // 업로드된 파일 갯수가 딱 한개일때만 업로드가 진행되도록 함
     }
+  };
+  const onShowEmojiPicker = () => {
+    setShowEmojiPicker((prev) => !prev);
+  };
+  const onEmojiClick = (emojiData: EmojiClickData) => {
+    const selectedEmoji = emojiData.emoji;
+    setTweet((tweet) => tweet + selectedEmoji);
   };
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -66,7 +75,7 @@ export default function Posting() {
         <ItemWrapper>
           <InputWrapper>
             <AttachFileButton htmlFor="file">
-              <InputIcon src="/public/attachfile.svg" alt="attach file" />
+              <InputIcon src="attachfile.svg" alt="attach file" />
               <br />
             </AttachFileButton>
             <AttachFileInput
@@ -75,7 +84,16 @@ export default function Posting() {
               accept="image/*"
               onChange={onFileChange}
             />
-            <InputIcon src="/public/emoji.svg" alt="emoji" />
+            <InputIcon
+              src="emoji.svg"
+              alt="emoji"
+              onClick={onShowEmojiPicker}
+            />
+            {showEmojiPicker ? (
+              <EmojiContainer>
+                <EmojiPicker onEmojiClick={onEmojiClick} />
+              </EmojiContainer>
+            ) : null}
           </InputWrapper>
           <ButtonWrapper>
             <SubmitBtn
@@ -102,9 +120,9 @@ const Form = styled.form`
 `;
 const TextArea = styled.textarea`
   resize: none;
-  height: 4rem;
+  height: 6rem;
   border: none;
-  background-color: white;
+  background-color: #f8f8f8;
   color: #8a66fa;
   padding: 0.8rem;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -118,32 +136,39 @@ const TextArea = styled.textarea`
   &:focus {
     outline: none;
     border: 1px solid #bca4ff;
+    background-color: #f9f7ff;
   }
 `;
-
 const ItemWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 `;
-
 const InputWrapper = styled.div`
   display: flex;
   flex-direction: row;
   gap: 0.5em;
+  position: relative;
+  background-color: transparent;
 `;
-
 const ButtonWrapper = styled.div``;
-
+const AttachFileButton = styled.label``;
+const AttachFileInput = styled.input`
+  display: none;
+`;
 const InputIcon = styled.img`
   width: 1.5em;
   height: 1.5em;
   cursor: pointer;
+  &:hover {
+    filter: brightness(1.7);
+  }
 `;
-const AttachFileButton = styled.label``;
-const AttachFileInput = styled.input`
-  display: none;
+const EmojiContainer = styled.div`
+  position: absolute;
+  left: 4em;
+  top: 0;
 `;
 const SubmitBtn = styled.input`
   padding: 0.5em 1.5em;
@@ -158,7 +183,6 @@ const SubmitBtn = styled.input`
     font-weight: 700;
   }
 `;
-
 const ImagePreview = styled.div`
   display: flex;
   img {

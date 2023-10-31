@@ -21,7 +21,12 @@ export interface MyTweet {
   photoURL?: string;
 }
 
-export default function Timeline() {
+type TimelineProps = {
+  searchResults: MyTweet[];
+  searchTerm: string;
+};
+
+export default function Timeline({ searchResults, searchTerm }: TimelineProps) {
   const [tweet, setTweet] = useState<MyTweet[]>([]);
 
   useEffect(() => {
@@ -30,7 +35,7 @@ export default function Timeline() {
       const tweetQuery = query(
         collection(db, "tweets"),
         orderBy("createdAt", "desc"),
-        limit(25)
+        limit(20)
       );
 
       unsubscribe = await onSnapshot(tweetQuery, (snapshot) => {
@@ -58,9 +63,22 @@ export default function Timeline() {
 
   return (
     <Wrapper>
-      {tweet.map((tweet) => (
-        <Tweet key={tweet.id} {...tweet} />
-      ))}
+      {searchResults.length > 0 ? (
+        searchResults.map((result) => (
+          <TweetRow key={result.id}>
+            <Tweet {...result} />
+          </TweetRow>
+        ))
+      ) : searchTerm ? (
+        <NoResultFound>검색 결과가 없습니다.</NoResultFound>
+      ) : (
+        tweet.map((tweet) => (
+          <TweetRow key={tweet.id}>
+            {" "}
+            <Tweet {...tweet} />
+          </TweetRow>
+        ))
+      )}
     </Wrapper>
   );
 }
@@ -69,4 +87,17 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+`;
+const TweetRow = styled.div`
+  &:hover {
+    background-color: #f9f7ff;
+  }
+`;
+const NoResultFound = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: hidden;
+  color: #ff6b3d;
 `;

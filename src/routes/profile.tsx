@@ -62,7 +62,7 @@ export default function Profile() {
         collection(db, "tweets"),
         where("userId", "==", user?.uid),
         orderBy("createdAt", "desc"),
-        limit(25)
+        limit(5)
       );
       const snapshot = await getDocs(tweetQuery);
       const myTweets = snapshot.docs.map((doc) => {
@@ -127,7 +127,7 @@ export default function Profile() {
               editedUserName
             )}
             <UserNameEditButton onClick={onUserNameEdit}>
-              <img src="/public/edit.svg" alt="username-edit-button" />
+              <img src="edit.svg" alt="username-edit-button" />
             </UserNameEditButton>
           </UserName>
           <UserEmail>{user?.email}</UserEmail>

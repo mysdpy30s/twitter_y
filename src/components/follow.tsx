@@ -9,15 +9,17 @@ export default function Follow() {
   );
 }
 const Wrapper = styled.div`
-  margin-left: 2em;
+  margin-left: 1em;
+  width: 100%;
 `;
 
 const H1 = styled.h1`
   font-size: 1.3rem;
   font-weight: 700;
+  margin-bottom: 0.6em;
 `;
 const Content = styled.div`
-  width: 80%;
+  width: 100%;
   background-color: #f2f2f2;
   border-radius: 3rem;
   padding: 1rem;
