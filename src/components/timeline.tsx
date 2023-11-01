@@ -90,7 +90,7 @@ const Wrapper = styled.div`
 `;
 const TweetRow = styled.div`
   &:hover {
-    background-color: #f9f7ff;
+    background-color: #f4f0ff;
   }
 `;
 const NoResultFound = styled.div`

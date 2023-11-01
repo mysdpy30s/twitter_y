@@ -5,6 +5,7 @@ import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { deleteObject, getDownloadURL, ref } from "firebase/storage";
 import { useEffect, useState } from "react";
 import { formatDistanceToNow } from "date-fns";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function Tweet({
   username,
@@ -58,8 +59,9 @@ export default function Tweet({
     }
   };
   const onDelete = async () => {
-    const ok = confirm(
-      "작성된 트윗을 삭제하시겠습니까? 한번 삭제된 트윗은 다시 복구할 수 없습니다."
+    const ok = toast.warn(
+      "작성된 트윗을 삭제하시겠습니까? 한번 삭제된 트윗은 다시 복구할 수 없습니다.",
+      { position: toast.POSITION.TOP_CENTER }
     );
     if (!ok || user?.uid !== userId) return;
     try {
@@ -113,6 +115,7 @@ export default function Tweet({
         {user?.uid === userId ? (
           <DeleteButton onClick={onDelete}>
             <img src="delete.svg" alt="delete" />
+            <ToastContainer />
           </DeleteButton>
         ) : null}
       </EditColumn>
@@ -166,8 +169,8 @@ const EditColumn = styled.div`
 const EditInput = styled.input`
   border: 0;
   width: 100%;
-  height: 4rem;
-  background-color: #f4f0ff;
+  line-height: 3em;
+  background-color: white;
   font-size: 1em;
   margin-top: 0.7em;
   &:focus {

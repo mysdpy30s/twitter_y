@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Posting from "../components/posting";
 import Timeline, { MyTweet } from "../components/timeline";
 import SearchBar from "../components/search";
-import Trend from "../components/trend";
+import Trends from "../components/trend";
 import Follow from "../components/follow";
 import { useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -53,7 +53,7 @@ export default function Home() {
           </ScrollableTimeline>
         </Content>
         <Aside>
-          <Trend />
+          <Trends />
           <Follow />
         </Aside>
       </Wrapper>
