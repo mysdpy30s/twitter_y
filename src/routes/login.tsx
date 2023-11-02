@@ -1,6 +1,6 @@
 import { auth } from "../firebase";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import {
@@ -9,7 +9,6 @@ import {
   Error,
   Form,
   Input,
-  Switcher,
   Title,
   Wrapper,
 } from "../components/auth-components";
@@ -81,9 +80,9 @@ export default function Login({ closeLoginModal }: LoginProps) {
       {error.includes("auth/invalid-login-credentials") && (
         <Error>이메일 또는 비밀번호가 다릅니다.</Error>
       )}
-      <Switcher>
+      {/* <Switcher>
         트위터 계정이 없으신가요? <Link to="/create-account">계정 만들기</Link>
-      </Switcher>
+      </Switcher> */}
     </Wrapper>
   );
 }

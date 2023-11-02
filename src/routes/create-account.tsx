@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useState } from "react";
 import { auth } from "../firebase";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FirebaseError } from "firebase/app";
 import {
   Button,
@@ -9,7 +9,6 @@ import {
   Error,
   Form,
   Input,
-  Switcher,
   Text,
   Title,
   Wrapper,
@@ -123,9 +122,9 @@ export default function CreateAccount({ closeSignupModal }: SignupProps) {
       {error.includes("auth/weak-password") && (
         <Error>비밀번호는 최소 6자리 이상이어야 합니다.</Error>
       )}
-      <Switcher>
+      {/* <Switcher>
         이미 계정이 있으신가요? <Link to="/login">로그인</Link>
-      </Switcher>
+      </Switcher> */}
     </Wrapper>
   );
 }

@@ -19,8 +19,8 @@ export default function Trends() {
   ];
 
   useEffect(() => {
-    const shuffledData = [...dataSet].sort(() => Math.random() - 0.5);
-    const randomTrends = shuffledData.slice(0, 3);
+    const shuffledTrendData = [...dataSet].sort(() => Math.random() - 0.5);
+    const randomTrends = shuffledTrendData.slice(0, 3);
 
     setRandomTrends(randomTrends);
   }, []);
@@ -58,6 +58,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  cursor: default;
 `;
 
 const H1 = styled.h1`
@@ -70,7 +71,6 @@ const ImgTrend = styled.img`
   width: 1.5em;
   height: 1.5em;
 `;
-
 const Content = styled.div`
   width: 100%;
   background-color: #f2f2f2;
@@ -81,13 +81,12 @@ const ShowTrend = styled.div`
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
-  padding: 0.5em 0.3em;
+  padding: 0.5em 1em;
 `;
 const TrendName = styled.p`
   font-size: 1.1em;
   font-weight: 700;
 `;
-
 const TrendPosts = styled.p`
   color: #6c6c6c;
   font-size: 0.9em;

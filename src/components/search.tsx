@@ -66,6 +66,7 @@ const Searchinput = styled.input`
   }
   &:focus {
     border-bottom: 1px solid #8a66fa;
+    background-color: #f9f7ff;
     outline: none;
   }
 `;

@@ -87,7 +87,10 @@ export default function Tweet({
       </AvatarColumn>
       <ContentColumn>
         <NameDateRow>
-          <Username>{username}</Username>
+          <Username>
+            {username}
+            <img src="verified.svg" />
+          </Username>
           <CreatedAt title={convertedTime}>{timeAgo}</CreatedAt>
         </NameDateRow>
         {isEditing ? (
@@ -150,6 +153,11 @@ const Username = styled.span`
   font-weight: 600;
   font-size: 1.1em;
   cursor: default;
+  img {
+    margin-left: 0.1em;
+    width: 1em;
+    height: 1em;
+  }
 `;
 const CreatedAt = styled.div`
   font-size: 0.8em;
