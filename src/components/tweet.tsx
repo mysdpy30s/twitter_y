@@ -59,9 +59,8 @@ export default function Tweet({
     }
   };
   const onDelete = async () => {
-    const ok = toast.warn(
-      "작성된 트윗을 삭제하시겠습니까? 한번 삭제된 트윗은 다시 복구할 수 없습니다.",
-      { position: toast.POSITION.TOP_CENTER }
+    const ok = confirm(
+      "작성된 트윗을 삭제하시겠습니까? 한번 삭제된 트윗은 다시 복구할 수 없습니다."
     );
     if (!ok || user?.uid !== userId) return;
     try {
