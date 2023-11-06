@@ -5,7 +5,6 @@ import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { deleteObject, getDownloadURL, ref } from "firebase/storage";
 import { useEffect, useState } from "react";
 import { formatDistanceToNow } from "date-fns";
-import { toast, ToastContainer } from "react-toastify";
 
 export default function Tweet({
   username,
@@ -117,7 +116,6 @@ export default function Tweet({
         {user?.uid === userId ? (
           <DeleteButton onClick={onDelete}>
             <img src="delete.svg" alt="delete" />
-            <ToastContainer />
           </DeleteButton>
         ) : null}
       </EditColumn>
